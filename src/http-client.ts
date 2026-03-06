@@ -108,7 +108,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform List Accounts - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform List Accounts - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -143,7 +143,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform Get Account - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform Get Account - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -178,7 +178,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform List Groups - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform List Groups - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -215,7 +215,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform Update Group - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform Update Group - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -251,7 +251,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform Get Role - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform Get Role - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -286,7 +286,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform List Safes - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform List Safes - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -321,7 +321,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform Get Safe Permissions - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform Get Safe Permissions - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -357,7 +357,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform Get User Safe Permissions - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform Get User Safe Permissions - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -397,7 +397,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform Manage Safe Permissions - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform Manage Safe Permissions - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -438,7 +438,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform Manage Get User Id - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform Manage Get User Id - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
@@ -484,7 +484,7 @@ export class HTTPClient {
                 })
 
                 throw new ConnectorError(
-                    `Issue when trying to perform Create User Invite - ${error.response?.status} - ${error.response?.data}`
+                    `Issue when trying to perform Create User Invite - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
                 )
             })
     }
