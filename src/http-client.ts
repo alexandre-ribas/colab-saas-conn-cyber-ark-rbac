@@ -73,7 +73,7 @@ export class HTTPClient {
 
     async getAllAccounts(filter: string = ''): Promise<AxiosResponse> {
         const accessToken = await this.getAccessToken()
- 
+
         let request: AxiosRequestConfig = {
             method: 'get',
             baseURL: this.getEndpoint('user'),
@@ -177,7 +177,7 @@ export class HTTPClient {
             })
     }
 
-    async updateGroup(id: string,body: object): Promise<AxiosResponse> {
+    async updateGroup(id: string, body: object): Promise<AxiosResponse> {
         const accessToken = await this.getAccessToken()
 
         let request: AxiosRequestConfig = {
@@ -224,7 +224,7 @@ export class HTTPClient {
                 Authorization: `Bearer ${accessToken}`,
                 Accept: 'application/json',
             },
-            data: {"Name": id}
+            data: { "Name": id }
         }
 
         return axios(request)
@@ -356,7 +356,7 @@ export class HTTPClient {
             })
     }
 
-    async manageSafePermissions(id: string,requestBody: object,method: string): Promise<AxiosResponse> {
+    async manageSafePermissions(id: string, requestBody: object, method: string): Promise<AxiosResponse> {
         const accessToken = await this.getAccessToken()
 
         let request: AxiosRequestConfig = {
@@ -369,7 +369,7 @@ export class HTTPClient {
             data: requestBody
         }
 
-        if(method == 'put' || method == 'delete'){
+        if (method == 'put' || method == 'delete') {
             request.url = `/${id}`
         }
 
@@ -437,7 +437,48 @@ export class HTTPClient {
             })
     }
 
-    async createUesrInvite(id: string,userName: string): Promise<AxiosResponse> {
+    async createScimUser(attributes: any): Promise<AxiosResponse> {
+        const accessToken = await this.getAccessToken()
+
+        let request: AxiosRequestConfig = {
+            method: 'post',
+            baseURL: this.getEndpoint('user'),
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: {
+                "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+                "userName": attributes.userName,
+                "active": attributes.active
+            }
+        }
+
+        return axios(request)
+            .then((response) => {
+                logger.info({
+                    message: 'Create SCIM User - Success',
+                    statusCode: response.status,
+                    response: response.data,
+                })
+                return response
+            })
+            .catch((error) => {
+                logger.error({
+                    message: `Issue when trying to perform Create SCIM User`,
+                    statusCode: error.response?.status,
+                    response: error.response?.data,
+                    stack: error.stack,
+                })
+
+                throw new ConnectorError(
+                    `Issue when trying to perform Create SCIM User - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
+                )
+            })
+    }
+
+    async createUserInvite(id: string, userName: string): Promise<AxiosResponse> {
         const accessToken = await this.getAccessToken()
 
         let request: AxiosRequestConfig = {
@@ -449,7 +490,7 @@ export class HTTPClient {
                 Accept: 'application/json',
             },
             data: {
-                "EmailInvite": false,
+                "EmailInvite": true,
                 "Entities": [
                     {
                         "Type": "user",

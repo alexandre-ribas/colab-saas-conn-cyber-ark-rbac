@@ -318,12 +318,15 @@ export const connector = async () => {
                     logger.info(`A new account for ${input.attributes.userName} will not be created because
                         an existing account was found with the same email address - account id is ${account.attributes.id}`)
                 } else {
-                    const directory_query = await httpClient.getUserId(input.attributes.userName)
-                    await httpClient.createUesrInvite(
-                        directory_query.data.Result.User.Results[0].Entities[0].Key,
-                        input.attributes.userName
-                    )
-                    account = await readAccount(directory_query.data.Result.User.Results[0].Entities[0].Key)
+                    const scimCreationResponse = await httpClient.createScimUser(input.attributes)
+                    const scimId = scimCreationResponse.data.id
+
+                    // Dont send invite to user, this will be done by another process
+                    // await httpClient.createUserInvite(
+                    //     scimId,
+                    //     input.attributes.userName
+                    // )
+                    account = await readAccount(scimId)
                 }
 
                 if (input.attributes.groups) {
