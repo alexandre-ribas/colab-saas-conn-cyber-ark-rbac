@@ -443,9 +443,6 @@ export class HTTPClient {
             })
     }
 
-<<<<<<< HEAD
-    async createUesrInvite(id: string, userName: string): Promise<AxiosResponse> {
-=======
     async createScimUser(attributes: any): Promise<AxiosResponse> {
         const accessToken = await this.getAccessToken()
 
@@ -488,7 +485,6 @@ export class HTTPClient {
     }
 
     async createUserInvite(id: string, userName: string): Promise<AxiosResponse> {
->>>>>>> feat/scim-account-creation
         const accessToken = await this.getAccessToken()
 
         let request: AxiosRequestConfig = {
