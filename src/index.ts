@@ -45,7 +45,7 @@ export const connector = async () => {
                 `user.display eq "${account_response.data.userName}"`
             )
         } else {
-            safe_permissions.data.Resources = safe_permissions.data.Resources.filter(
+            safe_permissions.data.Resources = (safe_permissions.data.Resources || []).filter(
                 (resource: any) => resource.user?.value === id
             )
         }
@@ -266,7 +266,7 @@ export const connector = async () => {
                 for (const acc of accounts.data.Resources) {
                     const account_groups: string[] = acc.groups?.map((group: any) => group.value)
 
-                    const user_safe_permissions = safe_permissions.data.Resources.filter(
+                    const user_safe_permissions = (safe_permissions.data.Resources || []).filter(
                         (resource: any) => resource.user?.value === acc.id
                     )
 
@@ -412,14 +412,18 @@ export const connector = async () => {
                 const safe_permissions: AxiosResponse = await httpClient.getAllSafePermissions()
                 for (const group of group_response.data.Resources) {
                     const role = await httpClient.getRole(group.id)
-                    const group_safe_permissions = safe_permissions.data.Resources.filter(
+                    const group_safe_permissions = (safe_permissions.data.Resources || []).filter(
                         (resource: any) => resource.group?.value === group.id
                     )
                     const response: Group = new Group({
                         id: group.id,
                         displayName: group.displayName,
                         description: role.data.Result.Description,
-                        permissions:  group_safe_permissions.map((permission: any) => ({
+                        members: (group.members || []).map((member: any) => ({
+                            id: member.value,
+                            displayName: member.display,
+                        })),
+                        permissions: group_safe_permissions.map((permission: any) => ({
                             target: permission.container.value,
                             rights: permission.rights.toString(),
                         }))
