@@ -443,7 +443,52 @@ export class HTTPClient {
             })
     }
 
+<<<<<<< HEAD
     async createUesrInvite(id: string, userName: string): Promise<AxiosResponse> {
+=======
+    async createScimUser(attributes: any): Promise<AxiosResponse> {
+        const accessToken = await this.getAccessToken()
+
+        let request: AxiosRequestConfig = {
+            method: 'post',
+            baseURL: this.getEndpoint('user'),
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            data: {
+                "schemas": ["urn:ietf:params:scim:schemas:core:2.0:User"],
+                "userName": attributes.userName,
+                "active": attributes.active
+            }
+        }
+
+        return axios(request)
+            .then((response) => {
+                logger.info({
+                    message: 'Create SCIM User - Success',
+                    statusCode: response.status,
+                    response: response.data,
+                })
+                return response
+            })
+            .catch((error) => {
+                logger.error({
+                    message: `Issue when trying to perform Create SCIM User`,
+                    statusCode: error.response?.status,
+                    response: error.response?.data,
+                    stack: error.stack,
+                })
+
+                throw new ConnectorError(
+                    `Issue when trying to perform Create SCIM User - ${error.response?.status} - ${typeof error.response?.data === 'object' ? JSON.stringify(error.response.data) : error.response?.data || error.message}`
+                )
+            })
+    }
+
+    async createUserInvite(id: string, userName: string): Promise<AxiosResponse> {
+>>>>>>> feat/scim-account-creation
         const accessToken = await this.getAccessToken()
 
         let request: AxiosRequestConfig = {
@@ -455,7 +500,7 @@ export class HTTPClient {
                 Accept: 'application/json',
             },
             data: {
-                "EmailInvite": false,
+                "EmailInvite": true,
                 "Entities": [
                     {
                         "Type": "user",
